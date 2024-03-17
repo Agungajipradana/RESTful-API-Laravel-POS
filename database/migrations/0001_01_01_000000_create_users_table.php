@@ -1,16 +1,17 @@
 <?php
 
+// Membuat migrasi untuk membuat tabel 'users', 'password_reset_tokens', dan 'sessions'
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
+        // Membuat tabel 'users' untuk menyimpan informasi pengguna
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -21,12 +22,14 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Membuat tabel 'password_reset_tokens' untuk menyimpan token reset password
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
 
+        // Membuat tabel 'sessions' untuk menyimpan informasi sesi pengguna
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -42,6 +45,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Menghapus tabel 'users', 'password_reset_tokens', dan 'sessions' jika migrasi di-rollback
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
